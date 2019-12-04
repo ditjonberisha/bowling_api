@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_04_212355) do
+ActiveRecord::Schema.define(version: 2019_12_04_230322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "frames", force: :cascade do |t|
+    t.bigint "game_id"
+    t.integer "number"
+    t.integer "first_ball"
+    t.integer "second_ball"
+    t.integer "third_ball"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_frames_on_game_id"
+  end
 
   create_table "games", force: :cascade do |t|
     t.string "name"
@@ -21,6 +33,10 @@ ActiveRecord::Schema.define(version: 2019_12_04_212355) do
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "active_frame_id"
+    t.index ["active_frame_id"], name: "index_games_on_active_frame_id"
   end
 
+  add_foreign_key "frames", "games"
+  add_foreign_key "games", "frames", column: "active_frame_id"
 end
