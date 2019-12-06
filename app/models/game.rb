@@ -35,6 +35,6 @@ class Game < ApplicationRecord
     def init_first_frame
       frame = frames.create!(number: 1)
 
-      update(active_frame: frame)
+      update!(active_frame: frame)
     end
 end

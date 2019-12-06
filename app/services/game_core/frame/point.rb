@@ -1,8 +1,12 @@
 module GameCore::Frame
   class Point
+    include ActiveModel::Validations
     include GameCore::Constants
 
     attr_reader :game, :current_frame, :points, :shot
+
+    validates :points, inclusion: { in: ALLOWED_POINTS, message: '%{value} out of range.' }
+    validates :game, :current_frame, :shot, presence: true
 
     def initialize(game, points)
       @game = game
@@ -11,12 +15,58 @@ module GameCore::Frame
     end
 
     def create
-      raise errors.full_messages unless valid?
-      # TODO create points
+      raise Errors::Game::InvalidInput.new(errors.full_messages) unless valid?
+
+      update_frame
+      update_game
     end
 
     def current_frame
       @current_frame ||= game.active_frame
     end
+
+    private
+      def set_shot
+        current_frame.send("#{shot}=", points)
+      end
+
+      def strike?
+        current_frame.first_ball.to_i == MAX_PINS
+      end
+
+      def spare?
+        current_frame.first_ball.to_i + current_frame.second_ball.to_i == MAX_PINS
+      end
+
+      def update_frame
+        set_shot
+        raise Errors::Game::InvalidLogic if check_max_pins
+
+        if strike?
+          current_frame.status = :strike
+        elsif spare?
+          current_frame.status = :spare
+        else
+          current_frame.status = :normal
+        end
+        current_frame.save!
+      end
+
+      def update_game
+        game.status = check_game_status
+        game.save!
+      end
+
+      def check_game_status
+        if game.active_frame.number == MAX_FRAMES
+          return :completed if shot == :second_ball && game.active_frame.status == 'normal'
+          return :completed if shot == :third_ball
+        end
+        :active
+      end
+
+      def check_max_pins
+        !strike? && current_frame.first_ball.to_i + current_frame.second_ball.to_i > MAX_PINS
+      end
   end
 end

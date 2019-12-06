@@ -19,7 +19,7 @@ module Errors
         respond(:parameter_missing, 400, "#{e.param} parameter is required")
       end
 
-      rescue_from GameError do |e|
+      rescue_from Errors::GameError do |e|
         respond(e.error, e.status, e.message)
       end
     end
