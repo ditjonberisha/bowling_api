@@ -1,4 +1,4 @@
-module Error::Helpers
+module Errors::Helpers
   class Render
     def self.json(_error, _status, _message)
       {

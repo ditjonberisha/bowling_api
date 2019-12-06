@@ -1,4 +1,4 @@
-module Error
+module Errors
   module ErrorHandler
     extend ActiveSupport::Concern
 
@@ -17,6 +17,10 @@ module Error
 
       rescue_from ActionController::ParameterMissing do |e|
         respond(:parameter_missing, 400, "#{e.param} parameter is required")
+      end
+
+      rescue_from GameError do |e|
+        respond(e.error, e.status, e.message)
       end
     end
 

@@ -31,4 +31,11 @@ class Frame < ApplicationRecord
   def score
     first_ball.to_i + second_ball.to_i + third_ball.to_i
   end
+
+  def next_shot
+    return :first_ball if first_ball.nil?
+    return :second_ball if second_ball.nil?
+    return :third_ball if third_ball.nil? && (strike? || spare?)
+    nil
+  end
 end

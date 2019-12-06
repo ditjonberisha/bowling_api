@@ -20,6 +20,8 @@
 #
 
 class Game < ApplicationRecord
+  default_scope { includes(:active_frame) }
+
   has_many :frames, dependent: :destroy
   belongs_to :active_frame, class_name: 'Frame', optional: true
 
