@@ -8,8 +8,9 @@ module GameCore::Frame
     end
 
     def update
-      add_bonus(previous_frame)
-      add_bonus(previous_previous_frame)
+      bonus = add_bonus(previous_frame)
+      bonus += add_bonus(previous_previous_frame)
+      bonus
     end
 
     def previous_frame

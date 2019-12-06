@@ -57,8 +57,9 @@ module GameCore::Frame
       end
 
       def update_game
-        update_bonus
+        bonus = update_bonus
         game.status = check_game_status
+        game.total_score += points + bonus
         game.save!
       end
 
