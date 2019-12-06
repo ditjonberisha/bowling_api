@@ -31,6 +31,10 @@ class Game < ApplicationRecord
 
   after_create :init_first_frame
 
+  def frame_by_number(number)
+    frames.find_by(number: number)
+  end
+
   private
     def init_first_frame
       frame = frames.create!(number: 1)

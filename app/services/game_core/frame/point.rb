@@ -52,7 +52,12 @@ module GameCore::Frame
         current_frame.save!
       end
 
+      def update_bonus
+        Bonus.new(game, points).update
+      end
+
       def update_game
+        update_bonus
         game.status = check_game_status
         game.save!
       end
