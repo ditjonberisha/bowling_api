@@ -26,7 +26,7 @@ module GameCore::Frame
     end
 
     def current_frame
-      @current_frame ||= game.active_frame
+      @current_frame ||= game&.active_frame
     end
 
     private

@@ -42,6 +42,7 @@ group :development, :test do
   gem 'faker', '~> 1.8', '>= 1.8.4'
   gem 'rspec-rails', '~> 3.6', '>= 3.6.1'
   gem 'rspec_junit_formatter'
+  gem 'shoulda-matchers'
 end
 
 group :development do

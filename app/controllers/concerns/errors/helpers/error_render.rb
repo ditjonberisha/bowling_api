@@ -1,5 +1,5 @@
 module Errors::Helpers
-  class Render
+  class ErrorRender
     def self.json(_error, _status, _message)
       {
           status: _status,

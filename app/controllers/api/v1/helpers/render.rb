@@ -1,4 +1,4 @@
-module Helpers
+module Api::V1::Helpers
   module Render
     extend ActiveSupport::Concern
 
