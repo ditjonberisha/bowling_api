@@ -49,7 +49,7 @@ RSpec.describe Game, type: :model do
 
   describe 'after_create' do
     it 'should create first frame' do
-      game = create(:game)
+      game = create(:game_with_callbacks)
       expect(game.frames.count).to eq(1)
       expect(game.active_frame).to be
     end

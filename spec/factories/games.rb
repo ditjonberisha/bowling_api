@@ -22,5 +22,11 @@
 FactoryBot.define do
   factory :game do
     name { Faker::Name.name }
+
+    after(:build) { |g| g.class.skip_callback(:create, :after, :init_first_frame, raise: false) }
+
+    factory :game_with_callbacks do
+      after(:create) { |g| g.send(:init_first_frame) }
+    end
   end
 end
