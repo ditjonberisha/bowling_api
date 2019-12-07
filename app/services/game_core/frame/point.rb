@@ -19,6 +19,7 @@ module GameCore::Frame
 
       update_frame
       update_game
+      respond
     end
 
     def current_frame
@@ -73,6 +74,10 @@ module GameCore::Frame
 
       def check_max_pins
         !strike? && current_frame.first_ball.to_i + current_frame.second_ball.to_i > MAX_PINS
+      end
+
+      def respond
+        { id: game.id, points: points, shot: shot, type: current_frame.status }
       end
   end
 end

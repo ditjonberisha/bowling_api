@@ -26,7 +26,7 @@ module Errors
 
     private
       def respond(_error, _status, _message)
-        json = Helpers::Render.json(_error, _status, _message)
+        json = Errors::Helpers::Render.json(_error, _status, _message)
         render json: json, status: _status
       end
   end

@@ -5,11 +5,11 @@ class Api::V1::GamesController < Api::V1::BaseController
     game = Game.new(game_params)
 
     game.save!
-    object_json(game, GameSerializer)
+    serialize_object(game, CreateGameSerializer)
   end
 
   def show
-    object_json(@game, GameSerializer)
+    serialize_object(@game, GameSerializer)
   end
 
   protected
@@ -19,9 +19,5 @@ class Api::V1::GamesController < Api::V1::BaseController
 
     def game_params
       { name: params.require(:name) }
-    end
-
-    def object_json(object, serializer, _status = nil)
-      render json: object, serializer: serializer, status: _status || 200
     end
 end
