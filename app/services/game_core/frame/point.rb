@@ -17,8 +17,11 @@ module GameCore::Frame
     def create
       raise Errors::Game::InvalidInput.new(errors.full_messages) unless valid?
 
-      update_frame
-      update_game
+      ActiveRecord::Base.transaction do
+        update_frame
+        update_game
+      end
+
       respond
     end
 

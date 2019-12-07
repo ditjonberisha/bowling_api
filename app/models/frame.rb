@@ -22,9 +22,16 @@
 #
 
 class Frame < ApplicationRecord
+  include GameCore::Constants
+
   default_scope { order(number: :asc) }
 
   belongs_to :game
+
+  validates :number, presence: true, inclusion: { in: ALLOWED_FRAMES, message: '%{value} out of frames range.' }
+  validates :first_ball, inclusion: { in: :allowed_points, message: '%{value} out of points range.' }
+  validates :second_ball, inclusion: { in: :allowed_points, message: '%{value} out of points range.' }
+  validates :third_ball, inclusion: { in: :allowed_points, message: '%{value} out of points range.' }
 
   enum status: %i[normal spare strike]
 
@@ -38,4 +45,9 @@ class Frame < ApplicationRecord
     return :third_ball if third_ball.nil? && (strike? || spare?)
     nil
   end
+
+  private
+    def allowed_points
+      ALLOWED_POINTS.to_a << nil
+    end
 end
