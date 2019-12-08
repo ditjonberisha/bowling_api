@@ -65,7 +65,7 @@ RSpec.describe Api::V1::Games::PointsController, type: :controller do
       frame = create(:frame, number: 1)
       game.update(active_frame: frame)
       params = { game_id: game.id, points: 11 }
-      exp_response = { status: 400, error: 'invalid_input', message: ['Points 11 out of range.'] }
+      exp_response = { status: 400, error: 'invalid_input', message: ['Points 11 out of points range.'] }
 
       post 'create', params: params
 

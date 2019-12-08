@@ -5,13 +5,13 @@ module GameCore::Frame
 
     attr_reader :game, :current_frame, :points, :shot
 
-    validates :points, inclusion: { in: ALLOWED_POINTS, message: '%{value} out of range.' }
+    validates :points, inclusion: { in: ALLOWED_POINTS, message: '%{value} out of points range.' }
     validates :game, :current_frame, :shot, presence: true
 
     def initialize(game, points)
       @game = game
       @points = points.to_i
-      @shot = current_frame.next_shot
+      @shot = current_frame&.next_shot
     end
 
     def create

@@ -14,11 +14,11 @@ module GameCore::Frame
     end
 
     def previous_frame
-      game&.frame_by_number(game&.active_frame&.number - 1)
+      game&.frame_by_number(game&.active_frame&.number.to_i - 1)
     end
 
     def previous_previous_frame
-      game&.frame_by_number(game&.active_frame&.number - 2)
+      game&.frame_by_number(game&.active_frame&.number.to_i - 2)
     end
 
     private
