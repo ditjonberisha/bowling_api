@@ -8,4 +8,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  root 'api/v1/base#api'
 end
